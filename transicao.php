@@ -138,40 +138,39 @@
 	<div id="resultado-verificacao"></div>
 
 	<script>
-		function submitForm() {
-			var respostaSelecionada = $('input[name="alternativa"]:checked');
-			var respostaSelecionadaValor = respostaSelecionada.val();
+function submitForm() {
+  var respostaSelecionada = $('input[name="alternativa"]:checked');
+  var respostaSelecionadaValor = respostaSelecionada.val();
 
-			// Adicionar a classe .alternativa-selecionada à alternativa selecionada
-			respostaSelecionada.closest('.alternativa').addClass('alternativa-selecionada');
+  // Adicionar a classe .alternativa-selecionada à alternativa selecionada
+  respostaSelecionada.closest('.alternativa').find('.alternativa-letra').addClass('alternativa-selecionada');
 
+  // Resto do código para enviar a resposta selecionada, etc.
+}
 
-			// Resto do código para enviar a resposta selecionada, etc.
-		}
+$(document).ready(function() {
+  $("#form-resposta").submit(function(event) {
+    event.preventDefault(); // impede o comportamento padrão do formulário
 
-		$(document).ready(function() {
-			$("#form-resposta").submit(function(event) {
-				event.preventDefault(); // impede o comportamento padrão do formulário
+    const h4 = document.querySelector('h4.informacoes-questao');
+    const numero = h4.textContent.match(/\d+/)[0];
+    var respostaSelecionada = $('input[name="alternativa"]:checked');
+    var respostaSelecionadaValor = respostaSelecionada.val();
+    var questionId = numero; // Recupera o valor do input hidden
 
-				const h4 = document.querySelector('h4.informacoes-questao');
-				const numero = h4.textContent.match(/\d+/)[0];
-				var respostaSelecionada = $('input[name="alternativa"]:checked');
-				var respostaSelecionadaValor = respostaSelecionada.val();
-				var questionId = numero; // Recupera o valor do input hidden
-
-				$.ajax({
-					url: "verificar_resposta.php",
-					type: "post",
-					data: {
-						alternativa: respostaSelecionadaValor,
-						question_id: questionId // Inclui o ID da questão nos dados enviados
-					},
-					success: function(data) {
-						$("#resultado-verificacao").html(data);
-					}
-				});
-			});
-		});
+    $.ajax({
+      url: "verificar_resposta.php",
+      type: "post",
+      data: {
+        alternativa: respostaSelecionadaValor,
+        question_id: questionId // Inclui o ID da questão nos dados enviados
+      },
+      success: function(data) {
+        $("#resultado-verificacao").html(data);
+      }
+    });
+  });
+});
 
 
 
