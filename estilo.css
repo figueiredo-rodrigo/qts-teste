@@ -12,15 +12,7 @@ body.my-style {
 
 }
 
-.radio[type="radio"] {
-  /* define um tamanho fixo para o botão */
-  width: 20px;
-  height: 20px;
-  /* centraliza o botão verticalmente */
-  vertical-align: middle;
-  /* esconde o botão original */
-  display: none;
-}
+
 
 .alternativa-selecionada {
   background-color: #F5F5F5;
