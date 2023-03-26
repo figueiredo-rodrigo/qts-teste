@@ -23,9 +23,10 @@ body.my-style {
 }
 
 .alternativa-selecionada {
-  background-color: #6f42c1;
-  color: #ffffff;
+  background-color: #F5F5F5;
+  border: 1px solid #ddd;
 }
+
 
 
 

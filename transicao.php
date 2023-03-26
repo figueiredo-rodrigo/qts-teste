@@ -138,15 +138,12 @@
 	<div id="resultado-verificacao"></div>
 
 	<script>
-		$(document).ready(function() {
-			// Adiciona evento ao clique nos círculos das alternativas
-			$(".alternativa").click(function() {
-				// Remove a classe "alternativa-selecionada" de todas as alternativas
-				$(".alternativa").removeClass("alternativa-selecionada");
-				// Adiciona a classe "alternativa-selecionada" à alternativa selecionada
-				$(this).addClass("alternativa-selecionada");
-			});
-		});
+	$(document).ready(function() {
+    $('.alternativa').click(function() {
+        $('.alternativa-letra').removeClass('alternativa-selecionada');
+        $(this).find('.alternativa-letra').addClass('alternativa-selecionada');
+    });
+});
 
 
 		$(document).ready(function() {
