@@ -34,13 +34,12 @@ body.my-style {
   cursor: pointer;
   line-height: 2rem;
   box-sizing: border-box;
-  display: inline-block;
+  display: flex;
   border: 1px solid #b0b5b5;
   align-content: center;
   justify-content: center;
   border-radius: 100%;
   background-color: white;
-  vertical-align: middle;
   width: 1.9rem;
   height: 1.9rem;
 }
@@ -96,5 +95,23 @@ body.my-style {
   padding-bottom: 0.4rem;
   line-height: 1.4rem;
   text-align: left;
+}
+
+
+.alternativa-espaco {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: Source Sans Pro, Trebuchet MS, Tahoma, sans-serif;
+  color: #333;
+  font-size: 1rem;
+  list-style-type: none;
+  font-weight: bold;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 2rem;
+  line-height: 2rem;
+  display: table-cell;
+  vertical-align: middle;
+  padding-right: 1rem;
 }
 

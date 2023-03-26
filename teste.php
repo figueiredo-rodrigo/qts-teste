@@ -113,8 +113,7 @@ $(document).ready(function() {
     var respostaSelecionada = $('input[name="alternativa"]:checked');
     var respostaSelecionadaValor = respostaSelecionada.val();
     var questionId = numero;
-	</script>
-	<script>
+	
 
     $.ajax({
       url: "verificar_resposta.php",

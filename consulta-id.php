@@ -52,40 +52,52 @@
 			
 			echo '<label class="alternativa">';
 			echo '<input type="radio" name="alternativa" value="a">';
-			echo '<span class="alternativa-letra"> A</span>';
+			echo '<div class="alternativa-espaco">';
+			echo '<span class="alternativa-letra">A</span>';
+			echo '</div>';
+			echo '<div class="alternativa-texto">';
 			echo '<span id="alternativa-a" class="alternativa-texto">' . nl2br($row['alternativa1']) . '</span>';
+			echo '</div>';
 			echo '</label>';
-			
-
 			
 			echo '<label class="alternativa">';
 			echo '<input type="radio" name="alternativa" value="b">';
+			echo '<div class="alternativa-espaco">';
 			echo '<span class="alternativa-letra">B</span>';
+			echo '</div>';
+			echo '<div class="alternativa-texto">';
 			echo '<span id="alternativa-b" class="alternativa-texto">' . nl2br($row['alternativa2']) . '</span>';
+			echo '</div>';
 			echo '</label>';
-			
-
 			
 			echo '<label class="alternativa">';
 			echo '<input type="radio" name="alternativa" value="c">';
+			echo '<div class="alternativa-espaco">';
 			echo '<span class="alternativa-letra">C</span>';
+			echo '</div>';
+			echo '<div class="alternativa-texto">';
 			echo '<span id="alternativa-c" class="alternativa-texto">' . nl2br($row['alternativa3']) . '</span>';
+			echo '</div>';
 			echo '</label>';
-			
-
 			
 			echo '<label class="alternativa">';
 			echo '<input type="radio" name="alternativa" value="d">';
+			echo '<div class="alternativa-espaco">';
 			echo '<span class="alternativa-letra">D</span>';
+			echo '</div>';
+			echo '<div class="alternativa-texto">';
 			echo '<span id="alternativa-d" class="alternativa-texto">' . nl2br($row['alternativa4']) . '</span>';
+			echo '</div>';
 			echo '</label>';
-			
-
 			
 			echo '<label class="alternativa">';
 			echo '<input type="radio" name="alternativa" value="e">';
+			echo '<div class="alternativa-espaco">';
 			echo '<span class="alternativa-letra">E</span>';
+			echo '</div>';
+			echo '<div class="alternativa-texto">';
 			echo '<span id="alternativa-e" class="alternativa-texto">' . nl2br($row['alternativa5']) . '</span>';
+			echo '</div>';
 			echo '</label>';
 			
 
