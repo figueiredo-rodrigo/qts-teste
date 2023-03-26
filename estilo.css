@@ -39,11 +39,6 @@ body.my-style {
   padding-left: 0.5rem;
 }
 
-.selecionado {
-  background-color: green;
-}
-
-
 
 
 .alternativa-letra {
@@ -83,15 +78,6 @@ body.my-style {
   width: 1.9rem;
   height: 1.9rem;
 }
-
-
-
-
-
-
-
-
-
 
 
 .alternativa-texto {
