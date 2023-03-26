@@ -21,10 +21,6 @@
 
 	?>
 
-	<!-- iframe para exibir a questão -->
-
-	<!-- botão para retorna para a questão anterior -->
-	<button id="questao-anterior">Questão anterior</button>
 
 	<!-- botão para avançar para a próxima questão -->
 	<button id="proxima-questao">Próxima questão</button>
@@ -75,57 +71,16 @@
 		}
 	</script>
 
-	<script>
-		// Quando o botão for clicado, execute a função a seguir
-		var btnQuestaoAnterior = document.getElementById('questao-anterior');
-		btnQuestaoAnterior.addEventListener('click', function() {
-
-			// Busca as questões disponíveis
-			fetch("http://localhost/consulta-questoes.php?assunto=<?php echo $link; ?>")
-				.then(response => response.text())
-				.then(html => {
-					const parser = new DOMParser();
-					const doc = parser.parseFromString(html, 'text/html');
-
-					// Filtra as questões para encontrar a questão anterior
-					const questoes = [...doc.querySelectorAll('[href^="transicao.php?questao="]')].filter(questao => {
-						const idQuestao = questao.getAttribute('href').match(/(\d+)/)[1];
-						return idQuestao > 0;
-					});
-
-					// Encontra o índice da questão atual
-					const numero = questoes.findIndex(questao => questao.getAttribute('href').match(/(\d+)/)[1] === "<?php echo $id; ?>");
-
-					// Encontra o ID da questão anterior
-					const id = questoes[numero - 1].getAttribute('href').match(/(\d+)/)[1];
-
-					// Atualiza a página com a questão anterior
-					location.replace('transicao.php?questao=' + id + '&link=' + "<?php echo $link; ?>");
-				})
-				.catch(error => console.log(error));
-
-			// Limpa o resultado de verificação
-			$('#resultado-verificacao').html('');
-		});
-	</script>
-
-
+	
 	<div id="resultado"></div>
 
-	<button id="marca-texto">Marcar texto</button>
-
 	<script>
-		const btnMarcaTexto = document.getElementById('marca-texto');
+		$('input[name="alternativa"]').on('change', function() {
+			// Remove a classe .alternativa-selecionada de todas as alternativas
+			$('.alternativa-letra').removeClass('alternativa-selecionada');
 
-		btnMarcaTexto.addEventListener('click', () => {
-			const trechoSelecionado = window.getSelection().toString();
-			if (trechoSelecionado) {
-				const marcacao = document.createElement('span');
-				marcacao.className = 'marca';
-				marcacao.textContent = trechoSelecionado;
-				const range = window.getSelection().getRangeAt(0);
-				range.surroundContents(marcacao);
-			}
+			// Adiciona a classe .alternativa-selecionada apenas na alternativa selecionada
+			$(this).parent('label').find('.alternativa-letra').addClass('alternativa-selecionada');
 		});
 	</script>
 
@@ -138,29 +93,10 @@
 	<div id="resultado-verificacao"></div>
 
 
-	
-	<script>
-		$('input[name="alternativa"]').on('change', function() {
-			// Remove a classe .alternativa-selecionada de todas as alternativas
-			$('.alternativa-letra').removeClass('alternativa-selecionada');
-
-			// Adiciona a classe .alternativa-selecionada apenas na alternativa selecionada
-			$(this).parent('label').find('.alternativa-letra').addClass('alternativa-selecionada');
-		});
-	</script>
 
 
 <script>
-function submitForm() {
-  var respostaSelecionada = $('input[name="alternativa"]:checked');
-  var respostaSelecionadaValor = respostaSelecionada.val();
 
-  // Adicionar a classe .alternativa-selecionada à alternativa selecionada
-  respostaSelecionada.closest('.alternativa').find('.alternativa-letra').addClass('alternativa-selecionada');
-
-
-  // Resto do código para enviar a resposta selecionada, etc.
-}
 $(document).ready(function() {
   $("#form-resposta").submit(function(event) {
     event.preventDefault();
@@ -169,6 +105,8 @@ $(document).ready(function() {
     var respostaSelecionada = $('input[name="alternativa"]:checked');
     var respostaSelecionadaValor = respostaSelecionada.val();
     var questionId = numero;
+	</script>
+	<script>
 
     $.ajax({
       url: "verificar_resposta.php",
@@ -187,7 +125,29 @@ $(document).ready(function() {
 
 </script>
 
+<body>
+	<form>
+		<label>
+			<input type="radio" name="alternativa" value="a">
+			<span class="alternativa-letra">A</span>
+		</label>
 
+		<label>
+			<input type="radio" name="alternativa" value="b">
+			<span class="alternativa-letra">B</span>
+		</label>
+
+	</form>
+
+	<script>
+		$('input[name="alternativa"]').on('change', function() {
+			// Remove a classe .alternativa-selecionada de todas as alternativas
+			$('.alternativa-letra').removeClass('alternativa-selecionada');
+
+			// Adiciona a classe .alternativa-selecionada apenas na alternativa selecionada
+			$(this).parent('label').find('.alternativa-letra').addClass('alternativa-selecionada');
+		});
+	</script>
 
 </body>
 
