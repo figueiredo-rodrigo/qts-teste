@@ -58,6 +58,9 @@
 					echo '</div>';
 					echo '<span id="alternativa-' . strtolower(chr($i + 96)) . '" class="alternativa-texto">' . nl2br($alternativa) . '</span>';
 					echo '</div>';
+					if ($alternativa_selecionada == strtolower(chr($i + 96))) {
+						echo ' class="alternativa-selecionada"';
+					}
 					echo '</label>';
 				}
 			}

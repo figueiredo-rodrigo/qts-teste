@@ -138,6 +138,16 @@
 	<div id="resultado-verificacao"></div>
 
 	<script>
+		$(document).ready(function() {
+			// Adiciona evento ao clique nos círculos das alternativas
+			$(".alternativa").click(function() {
+				// Remove a classe "alternativa-selecionada" de todas as alternativas
+				$(".alternativa").removeClass("alternativa-selecionada");
+				// Adiciona a classe "alternativa-selecionada" à alternativa selecionada
+				$(this).addClass("alternativa-selecionada");
+			});
+		});
+
 
 		$(document).ready(function() {
 			$("#form-resposta").submit(function(event) {
@@ -163,7 +173,7 @@
 			});
 		});
 
-		
+
 
 		src = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity = "sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

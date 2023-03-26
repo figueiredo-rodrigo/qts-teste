@@ -22,6 +22,12 @@ body.my-style {
   display: none;
 }
 
+.alternativa-selecionada {
+  background-color: #6f42c1;
+  color: #ffffff;
+}
+
+
 
 .alternativa{
   -webkit-text-size-adjust: 100%;
