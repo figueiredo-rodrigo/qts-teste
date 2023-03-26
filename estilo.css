@@ -12,24 +12,37 @@ body.my-style {
 
 }
 
-
-
-.alternativa-selecionada {
-  background-color: #F5F5F5;
-  border: 1px solid #ddd;
+.alternativa input[type="radio"] {
+  /* define um tamanho fixo para o botão */
+  width: 20px;
+  height: 20px;
+  /* centraliza o botão verticalmente */
+  vertical-align: middle;
+  /* esconde o botão original */
+  display: none;
 }
 
 
 .alternativa-letra {
-  font-size: 24px;
-  font-weight: bold;
-  display: inline-block;
-  padding: 8px;
-  margin-right: 8px;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  cursor: pointer;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: Source Sans Pro, Trebuchet MS, Tahoma, sans-serif;
   color: #333;
+  font-size: 1rem;
+  list-style-type: none;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 2rem;
+  box-sizing: border-box;
+  display: inline-block;
+  border: 1px solid #b0b5b5;
+  align-content: center;
+  justify-content: center;
+  border-radius: 100%;
+  background-color: white;
+  vertical-align: middle;
+  width: 1.9rem;
+  height: 1.9rem;
 }
 
 .alternativa-selecionada {
@@ -62,43 +75,9 @@ body.my-style {
 }
 
 
-.alternativa-letra{
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-family: Source Sans Pro, Trebuchet MS, Tahoma, sans-serif;
-  color: #333;
-  font-size: 1rem;
-  list-style-type: none;
-  font-weight: bold;
-  cursor: pointer;
-  box-sizing: border-box;
-  width: 2rem;
-  line-height: 2rem;
-  display: table-cell;
-  vertical-align: middle;
-  padding-right: 1rem;
-}
 
-.letra{
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-family: Source Sans Pro, Trebuchet MS, Tahoma, sans-serif;
-  color: #333;
-  font-size: 1rem;
-  list-style-type: none;
-  font-weight: bold;
-  cursor: pointer;
-  line-height: 2rem;
-  box-sizing: border-box;
-  display: flex;
-  border: 1px solid #b0b5b5;
-  align-content: center;
-  justify-content: center;
-  border-radius: 100%;
-  background-color: white;
-  width: 1.9rem;
-  height: 1.9rem;
-}
+
+
 
 .alternativa-texto{
   -webkit-text-size-adjust: 100%;
@@ -118,3 +97,4 @@ body.my-style {
   line-height: 1.4rem;
   text-align: left;
 }
+
