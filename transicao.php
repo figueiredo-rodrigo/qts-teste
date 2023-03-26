@@ -112,7 +112,7 @@
 
 	<div id="resultado"></div>
 
-	
+
 
 	<script>
 		$(document).on('change', 'input[name="alternativa"]', function() {
@@ -132,35 +132,33 @@
 
 	<div id="resultado-verificacao"></div>
 
-  
 
 
-<script>
 
-$(document).ready(function() {
-  $("#form-resposta").submit(function(event) {
-    event.preventDefault();
-    const h4 = document.querySelector('h4.informacoes-questao');
-    const numero = h4.textContent.match(/\d+/)[0];
-    var respostaSelecionada = $('input[name="alternativa"]:checked');
-    var respostaSelecionadaValor = respostaSelecionada.val();
-    var questionId = numero;
+	<script>
+		$(document).ready(function() {
+			$("#form-resposta").submit(function(event) {
+				event.preventDefault();
+				const h4 = document.querySelector('h4.informacoes-questao');
+				const numero = h4.textContent.match(/\d+/)[0];
+				var respostaSelecionada = $('input[name="alternativa"]:checked');
+				var respostaSelecionadaValor = respostaSelecionada.val();
+				var questionId = numero;
 
-	$.ajax({
-      url: "verificar_resposta.php",
-      type: "post",
-      data: {
-        alternativa: respostaSelecionadaValor,
-        question_id: questionId
-      },
-      success: function(data) {
-        $("#resultado-verificacao").html(data);
-      }
-    });
-  });
-});
-
-</script>
+				$.ajax({
+					url: "verificar_resposta.php",
+					type: "post",
+					data: {
+						alternativa: respostaSelecionadaValor,
+						question_id: questionId
+					},
+					success: function(data) {
+						$("#resultado-verificacao").html(data);
+					}
+				});
+			});
+		});
+	</script>
 
 
 
@@ -172,17 +170,17 @@ $(document).ready(function() {
 
 <button id="marca-texto">Marcar texto</button>
 
-	<script>
-		const btnMarcaTexto = document.getElementById('marca-texto');
+<script>
+	const btnMarcaTexto = document.getElementById('marca-texto');
 
-		btnMarcaTexto.addEventListener('click', () => {
-			const trechoSelecionado = window.getSelection().toString();
-			if (trechoSelecionado) {
-				const marcacao = document.createElement('span');
-				marcacao.className = 'marca';
-				marcacao.textContent = trechoSelecionado;
-				const range = window.getSelection().getRangeAt(0);
-				range.surroundContents(marcacao);
-			}
-		});
-	</script>
+	btnMarcaTexto.addEventListener('click', () => {
+		const trechoSelecionado = window.getSelection().toString();
+		if (trechoSelecionado) {
+			const marcacao = document.createElement('span');
+			marcacao.className = 'marca';
+			marcacao.textContent = trechoSelecionado;
+			const range = window.getSelection().getRangeAt(0);
+			range.surroundContents(marcacao);
+		}
+	});
+</script>
