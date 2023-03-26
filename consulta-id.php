@@ -36,31 +36,60 @@
 		// Exibe as informações da questão
 		if (mysqli_num_rows($result) > 0) {
 			$row = mysqli_fetch_assoc($result);
-			echo '<h4 class="informacoes-questao">ID: ' . $row['link'] . '</h2>';
+			echo '<h4 class="informacoes-questao">ID: ' . $row['id'] . '</h2>';
 			echo '<p class="informacoes-questao">Matéria: ' . $row['materia'] . '</p>';
 			echo '<p class="informacoes-questao">Assunto: ' . $row['assunto'] . '</p>';
 			echo '<p class="informacoes-questao">Banca: ' . $row['banca'] . '</p><br>';
+
 
 			// Exibir a questão e as alternativas
 			echo '<div class="border border-primary rounded p-2 informacoes-questao">';
 			echo nl2br($row['enunciado']);
 			echo '</div>';
 
-			// Exibir as alternativas
-			for ($i = 1; $i <= 5; $i++) {
-				$alternativa = $row['alternativa' . $i];
-				if (!empty($alternativa)) {
-					echo '<label>';
-					echo '<div class="alternativa">';
-					echo '<input class="radio" type="radio" name="alternativa" value="' . strtolower(chr($i + 96)) . '">';
-					echo '<div class="alternativa-letra">';
-					echo '<span class="letra">' . strtoupper(chr($i + 96)) . '</span>';
-					echo '</div>';
-					echo '<span id="alternativa-' . strtolower(chr($i + 96)) . '" class="alternativa-texto">' . nl2br($alternativa) . '</span>';
-					echo '</div>';
-					echo '</label>';
-				}
-			}
+			echo '<div class="alternativas">';
+
+			echo '<div class="border border-primary rounded p-2 informacoes-questao">';
+			echo '<label class="alternativa">';
+			echo '<input type="radio" name="alternativa" value="a">';
+			echo '<span class="alternativa-letra">A</span>';
+			echo '<span id="alternativa-a" class="alternativa-texto">' . nl2br($row['alternativa1']) . '</span>';
+			echo '</label>';
+			echo '</div>';
+
+			echo '<div class="border border-primary rounded p-2 informacoes-questao">';
+			echo '<label class="alternativa">';
+			echo '<input type="radio" name="alternativa" value="b">';
+			echo '<span class="alternativa-letra">B</span>';
+			echo '<span id="alternativa-b" class="alternativa-texto">' . nl2br($row['alternativa2']) . '</span>';
+			echo '</label>';
+			echo '</div>';
+
+			echo '<div class="border border-primary rounded p-2 informacoes-questao">';
+			echo '<label class="alternativa">';
+			echo '<input type="radio" name="alternativa" value="c">';
+			echo '<span class="alternativa-letra">C</span>';
+			echo '<span id="alternativa-c" class="alternativa-texto">' . nl2br($row['alternativa3']) . '</span>';
+			echo '</label>';
+			echo '</div>';
+
+			echo '<div class="border border-primary rounded p-2 informacoes-questao">';
+			echo '<label class="alternativa">';
+			echo '<input type="radio" name="alternativa" value="d">';
+			echo '<span class="alternativa-letra">D</span>';
+			echo '<span id="alternativa-d" class="alternativa-texto">' . nl2br($row['alternativa4']) . '</span>';
+			echo '</label>';
+			echo '</div>';
+
+			echo '<div class="border border-primary rounded p-2 informacoes-questao">';
+			echo '<label class="alternativa">';
+			echo '<input type="radio" name="alternativa" value="e">';
+			echo '<span class="alternativa-letra">E</span>';
+			echo '<span id="alternativa-e" class="alternativa-texto">' . nl2br($row['alternativa5']) . '</span>';
+			echo '</label>';
+			echo '</div>';
+
+			echo '<div class="border border-primary rounded p-2 informacoes-questao">';
 		}
 	}
 

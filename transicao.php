@@ -138,6 +138,26 @@
 	<div id="resultado-verificacao"></div>
 
 	<script>
+		$('input[name="alternativa"]').on('change', function() {
+			// Remove a classe .alternativa-selecionada de todas as alternativas
+			$('.alternativa-letra').removeClass('alternativa-selecionada');
+
+			// Adiciona a classe .alternativa-selecionada apenas na alternativa selecionada
+			$(this).parent('label').find('.alternativa-letra').addClass('alternativa-selecionada');
+		});
+	</script>
+
+<script>
+function submitForm() {
+  var respostaSelecionada = $('input[name="alternativa"]:checked');
+  var respostaSelecionadaValor = respostaSelecionada.val();
+
+  // Adicionar a classe .alternativa-selecionada à alternativa selecionada
+  respostaSelecionada.closest('.alternativa').find('.alternativa-letra').addClass('alternativa-selecionada');
+
+
+  // Resto do código para enviar a resposta selecionada, etc.
+}
 $(document).ready(function() {
   $("#form-resposta").submit(function(event) {
     event.preventDefault();
@@ -162,12 +182,8 @@ $(document).ready(function() {
   });
 });
 
+</script>
 
-
-		src = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-		integrity = "sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-		crossorigin = "anonymous"
-	</script>
 
 </body>
 
