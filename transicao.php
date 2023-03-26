@@ -138,13 +138,16 @@
 	<div id="resultado-verificacao"></div>
 
 	<script>
-	$(document).ready(function() {
-    $('.alternativa').click(function() {
-        $('.alternativa-letra').removeClass('alternativa-selecionada');
-        $(this).find('.alternativa-letra').addClass('alternativa-selecionada');
-    });
-});
+		function submitForm() {
+			var respostaSelecionada = $('input[name="alternativa"]:checked');
+			var respostaSelecionadaValor = respostaSelecionada.val();
 
+			// Adicionar a classe .alternativa-selecionada à alternativa selecionada
+			respostaSelecionada.closest('.alternativa').addClass('alternativa-selecionada');
+
+
+			// Resto do código para enviar a resposta selecionada, etc.
+		}
 
 		$(document).ready(function() {
 			$("#form-resposta").submit(function(event) {
