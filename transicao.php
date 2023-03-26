@@ -137,6 +137,8 @@
 
 	<div id="resultado-verificacao"></div>
 
+
+	
 	<script>
 		$('input[name="alternativa"]').on('change', function() {
 			// Remove a classe .alternativa-selecionada de todas as alternativas
@@ -146,6 +148,7 @@
 			$(this).parent('label').find('.alternativa-letra').addClass('alternativa-selecionada');
 		});
 	</script>
+
 
 <script>
 function submitForm() {
@@ -183,6 +186,7 @@ $(document).ready(function() {
 });
 
 </script>
+
 
 
 </body>
