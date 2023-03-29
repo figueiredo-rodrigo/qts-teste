@@ -23,25 +23,81 @@
             die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
         }
 
-        // Consulta SQL para obter valores distintos da coluna "assunto" para a matéria especificada
-        $sql = "SELECT DISTINCT assunto FROM questoes WHERE materia = '$materia'";
-
-        // Executar a consulta SQL
+        $sql = "SELECT assunto, link, acertos, erros FROM questoes WHERE materia = '$materia' GROUP BY assunto, link";
         $result = mysqli_query($conn, $sql);
 
-        // Verificar se a consulta retornou algum resultado
-        if (mysqli_num_rows($result) > 0) {
-            // Exibir os valores distintos encontrados como links
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo '<a href="consulta-questoes.php?assunto=' . urlencode($row['assunto']) . '">' . htmlspecialchars($row['assunto']) . '</a><br>';
-            }
-        } else {
-            echo "Não foram encontrados valores distintos na coluna 'assunto' para a matéria '$materia'";
+        echo "<table>";
+        echo "<thead><tr><th>Assunto</th><th>Dificuldade</th><th>Quantidade</th></tr></thead>";
+        echo "<tbody>";
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $assunto = $row['assunto'];
+            $link = $row['link'];
+            $acertos = $row['acertos'];
+            $erros = $row['erros'];
+
+            $nivel_dificuldade = ($acertos + (2 * $erros)) / 100;
+
+            // Adicionar o nível de dificuldade a um array associativo, onde a chave é o assunto e o valor é um array com os links e seus respectivos níveis de dificuldade:
+            $assuntos[$assunto][$link] = $nivel_dificuldade;
         }
 
+        // Array para armazenar os níveis de dificuldade por assunto
+        $niveis_por_assunto = array();
+        $soma_niveis = 0;
+        $soma_niveis_vezes = 0;
+        foreach ($assuntos as $assunto => $links) {
+            // Somar os níveis de dificuldade de cada link
+
+            $nivel_01 = 0;
+            $nivel_02 = 0;
+            $nivel_03 = 0;
+            $nivel_04 = 0;
+            $nivel_05 = 0;
+            
+            
+
+            foreach ($links as $nivel) {
+
+                if ($nivel >= 1 && $nivel < 1.2) {
+                    $nivel_01 = $nivel_01 + 1;
+                } elseif ($nivel >= 1.2 && $nivel < 1.4) {
+                    $nivel_02 = $nivel_02 + 1;
+                } elseif ($nivel >= 1.4 && $nivel < 1.6) {
+                    $nivel_03 = $nivel_03 + 1;
+                } elseif ($nivel >= 1.6 && $nivel < 1.8) {
+                    $nivel_04 = $nivel_04 + 1;
+                } elseif ($nivel >= 1.8) {
+                    $nivel_05 = $nivel_05 + 1;
+                } else {
+                    $anulada = $nivel_05 + 1;
+                }
+            }
+
+            if ($nivel_01 + $nivel_02 + $nivel_03 + $nivel_04 + $nivel_05 > 0) {
+                $nivel_dificuldade_assunto = ($nivel_01 + ($nivel_02 * 2) + ($nivel_03 * 3) + ($nivel_04 * 4) + ($nivel_05 * 5)) / ($nivel_01 + $nivel_02 + $nivel_03 + $nivel_04 + $nivel_05);
+
+                $soma_niveis =  $soma_niveis + $nivel_dificuldade_assunto;
+                $soma_niveis_vezes =  $soma_niveis_vezes + 1;
+            } else {
+                $nivel_dificuldade_assunto = 0;
+            }
+
+            echo "<tr>";
+            echo '<td><a href="consulta-questoes.php?assunto=' . urlencode($assunto) . '">' . htmlspecialchars($assunto) . '</a></td>';
+            echo '<td>' . number_format($nivel_dificuldade_assunto, 2) . '</td>';
+            echo '<td>' . number_format($nivel_01 + $nivel_02 + $nivel_03 + $nivel_04 + $nivel_05, 0) . '</td>';
+            echo "</tr>";
+        }
+
+        echo "</tbody>";
+        echo "</table>";
+
+        echo number_format($soma_niveis / $soma_niveis_vezes, 2);
+
+    }
         // Fechar a conexão com o banco de dados
         mysqli_close($conn);
-    }
     ?>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

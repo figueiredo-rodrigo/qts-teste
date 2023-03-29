@@ -1,137 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 
 <head>
-	<meta charset="UTF-8">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="/estilo.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<title>Visualização de Questões</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Questões</title>
 </head>
 
-<body class="my-style">
+<body>
 
-	<?php
-	if (isset($_GET['questao'])) {
-		$id = $_GET['questao'];
-		$link = $_GET['link'];
-	}
+    <?php
+    header('Content-Type: text/html; charset=utf-8');
 
-	?>
-
-
-	<!-- botão para avançar para a próxima questão -->
-	<button id="proxima-questao">Próxima questão</button>
-
-	<!-- script em JavaScript -->
-	<script>
-		// Quando o botão for clicado, execute a função a seguir
-		var btnProximaQuestao = document.getElementById('proxima-questao');
-		btnProximaQuestao.addEventListener('click', function() {
-
-			// Busca as questões disponíveis
-			fetch("http://localhost/consulta-questoes.php?assunto=<?php echo $link; ?>")
-				.then(response => response.text())
-				.then(html => {
-					const parser = new DOMParser();
-					const doc = parser.parseFromString(html, 'text/html');
-
-					// Filtra as questões para encontrar a próxima
-					const questoes = [...doc.querySelectorAll('[href^="transicao.php?questao="]')].filter(questao => {
-						const idQuestao = questao.getAttribute('href').match(/(\d+)/)[1];
-						return idQuestao > 0;
-					});
-
-					// Encontra o índice da próxima questão
-					const numero = questoes.findIndex(questao => questao.getAttribute('href').match(/(\d+)/)[1] === "<?php echo $id; ?>");
-					const id = questoes[numero + 1].getAttribute('href').match(/(\d+)/)[1];
-					console.log(numero + 1)
-
-					// Atualiza a página com a próxima questão
-					location.replace('transicao.php?questao=' + id + '&link=' + "<?php echo $link; ?>");
-				})
-				.catch(error => console.log(error));
-
-			// Limpa o resultado de verificação
-			$('#resultado-verificacao').html('');
-		});
-
-		// Se houver um ID de questão definido, carrega a questão
-		if ("<?php echo $id; ?>" !== 0) {
-			console.log("<?php echo $id; ?>")
-
-			$.ajax({
-				url: 'consulta-id.php?id=' + "<?php echo $id; ?>",
-				success: function(data) {
-					$('#resultado').html(data);
-				}
-			});
-		}
-	</script>
-
-	
-	<div id="resultado"></div>
-
-	<script>
-		$(document).on('change', 'input[name="alternativa"]', function() {
-			// Remove a classe .alternativa-selecionada de todas as alternativas
-			$('.alternativa-letra').removeClass('alternativa-selecionada');
-
-			// Adiciona a classe .alternativa-selecionada apenas na alternativa selecionada
-			$(this).parent('label').find('.alternativa-letra').addClass('alternativa-selecionada');
-		});
-	</script>
+    // Conexão com o banco de dados
+    $conn = mysqli_connect("localhost", "root", "", "bancodeteste");
+    mysqli_set_charset($conn, "utf8");  // exibir corretamente caracteres acentuados e outros caracteres especiais
 
 
-	<form id="form-resposta" method="post">
-		<input type="hidden" name="question_id" value="<?php echo $url; ?>">
-		<button type="submit" id="btn-verificar-resposta">Verificar resposta</button>
-	</form>
 
-	<div id="resultado-verificacao"></div>
+    $materia = 'Administração de Recursos Materiais';
 
+    // Verificar se houve um erro ao conectar ao banco de dados
+    if (!$conn) {
+        die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
+    }
+
+    $sql1 = "SELECT DISTINCT materia FROM questoes";
+    $result1 = mysqli_query($conn, $sql1);
+
+    while ($row1 = mysqli_fetch_assoc($result1)) {
+        $materia = $row1['materia'];
+
+        echo '<h2><a href="consulta-assuntos.php?materia=' . urlencode($materia) . '">' . htmlspecialchars($materia) . '</a></h2>';
+        
+
+        $sql = "SELECT assunto, link, acertos, erros FROM questoes WHERE materia = '$materia' GROUP BY assunto, link";
+        $result = mysqli_query($conn, $sql);
+
+        $assuntos = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $assunto = $row['assunto'];
+            $link = $row['link'];
+            $acertos = $row['acertos'];
+            $erros = $row['erros'];
+            $nivel_dificuldade = ($acertos + (2 * $erros)) / 100;
+            $assuntos[$assunto][$link] = $nivel_dificuldade;
+        }
+
+        $niveis_por_assunto = array();
+
+        foreach ($assuntos as $assunto => $links) {
+
+            $soma_niveis = 0;
+            $nivel_01 = 0;
+            $nivel_02 = 0;
+            $nivel_03 = 0;
+            $nivel_04 = 0;
+            $nivel_05 = 0;
+
+            echo '<a href="consulta-questoes.php?assunto=' . urlencode($assunto) . '">' . htmlspecialchars($assunto) . '</a>';
+
+            foreach ($links as $nivel) {
+
+                if ($nivel >= 1 && $nivel < 1.2) {
+                    $nivel_01 = $nivel_01 + 1;
+                } elseif ($nivel >= 1.2 && $nivel < 1.4) {
+                    $nivel_02 = $nivel_02 + 1;
+                } elseif ($nivel >= 1.4 && $nivel < 1.6) {
+                    $nivel_03 = $nivel_03 + 1;
+                } elseif ($nivel >= 1.6 && $nivel < 1.8) {
+                    $nivel_04 = $nivel_04 + 1;
+                } elseif ($nivel >= 1.8) {
+                    $nivel_05 = $nivel_05 + 1;
+                } else {
+                    $anulada = $nivel_05 + 1;
+                }
+            }
+
+            if ($nivel_01 + $nivel_02 + $nivel_03 + $nivel_04 + $nivel_05 > 0) {
+                $nivel_dificuldade_assunto = ($nivel_01 + ($nivel_02 * 2) + ($nivel_03 * 3) + ($nivel_04 * 4) + ($nivel_05 * 5)) / ($nivel_01 + $nivel_02 + $nivel_03 + $nivel_04 + $nivel_05);
+            } else {
+                $nivel_dificuldade_assunto = 0;
+            }
+
+            echo '  |  ' . number_format($nivel_dificuldade_assunto, 2) . '<br>';
+        }
+    }
+
+
+
+    // Fechar a conexão com o banco de dados
+    mysqli_close($conn);
+
+    ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-		$('input[name="alternativa"]').on('change', function() {
-			// Remove a classe .alternativa-selecionada de todas as alternativas
-			$('.alternativa-letra').removeClass('alternativa-selecionada');
+        $(function() {
+            // Capturar o evento de clique nos links de matéria
+            $('.materia-link').on('click', function(e) {
+                // Permitir que o evento padrão do link seja executado
+                // Isso fará com que a página seja redirecionada para o link da matéria
+                // Depois a consulta utilizando AJAX será realizada
+                return true;
+            });
 
-			// Adiciona a classe .alternativa-selecionada apenas na alternativa selecionada
-			$(this).parent('label').find('.alternativa-letra').addClass('alternativa-selecionada');
-		});
-	</script>
+            // Capturar o evento de clique nos links de matéria após a página ter sido redirecionada
+            $(document).on('click', '.materia-link', function(e) {
+                e.preventDefault(); // prevenir a ação padrão do link
 
+                // Obter o valor da matéria do link clicado
+                var materia = $(this).text();
 
-<script>
+                // Realizar a nova consulta utilizando AJAX
+                $.ajax({
+                    url: 'consulta-assuntos.php',
+                    method: 'GET',
+                    data: {
+                        materia: materia
+                    },
+                    success: function(response) {
+                        // Exibir os valores de assunto retornados
+                        $('#assuntos').html(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
 
-$(document).ready(function() {
-  $("#form-resposta").submit(function(event) {
-    event.preventDefault();
-    const h4 = document.querySelector('h4.informacoes-questao');
-    const numero = h4.textContent.match(/\d+/)[0];
-    var respostaSelecionada = $('input[name="alternativa"]:checked');
-    var respostaSelecionadaValor = respostaSelecionada.val();
-    var questionId = numero;
-	
-
-    $.ajax({
-      url: "verificar_resposta.php",
-      type: "post",
-      data: {
-        alternativa: respostaSelecionadaValor,
-        question_id: questionId
-      },
-      success: function(data) {
-        $("#resultado-verificacao").html(data);
-        respostaSelecionada.closest('.alternativa').find('.alternativa-letra').addClass('alternativa-selecionada');
-      }
-    });
-  });
-});
-
-</script>
+    <div id="assuntos"></div>
 
 
+
+</body>
 
 </html>
