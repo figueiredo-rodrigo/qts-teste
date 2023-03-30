@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8">
+	<title>Exemplo Tablesorter</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.default.min.css" integrity="sha512-4qZJ8zv5jK7xgJZ5zjy9X9Qv6QJg6LdU+1a4eWk4wZf+7mKzF5X5bYlGJyLcVpCq0n8tLWvKwUzB7xOjy+XfQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body>
+
+<table id="myTable" class="tablesorter">
+<thead>
+<tr>
+<th>Nome</th>
+<th>Idade</th>
+<th>Cidade</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>João</td>
+<td>25</td>
+<td>São Paulo</td>
+</tr>
+
+<tr>
+<td>Maria</td>
+<td>30</td>
+<td>Rio de Janeiro</td>
+</tr>
+
+<tr>
+<td>Lucas</td>
+<td>20</td>
+<td>Belo Horizonte</td>
+</tr>
+
+<tr>
+<td>Julia</td>
+<td>27</td>
+<td>Curitiba</td>
+</tr>
+
+<tr>
+<td>Pedro</td>
+<td>22</td>
+<td>Salvador</td>
+</tr>
+
+<tr>
+<td>Gabriel</td>
+<td>29</td>
+<td>Fortaleza</td>
+</tr>
+
+<tr>
+<td>Marcos</td>
+<td>26</td>
+<td>Recife</td>
+</tr>
+
+<tr>
+<td>Júlia</td>
+<td>23</td>
+<td>São Luís do Maranhão </td></tr>
+
+<tr><td>Felipe </td><td>28 </td><td>Belo Horizonte </td></tr>
+
+<tr><td>Mariana </td><td>24 </td><td>São Paulo </td></tr>
+
+<tr><td>Rafael </td><td>21 </td><td>Rio de Janeiro </td></tr>
+
+<tr><td>Gustavo </td><td>26 </td><td>Belo Horizonte </td></tr>
+
+<tr><td>Larissa </td><td>29 </td><td>São Paulo </td></tr>
+
+<tr><th>Total:</th><th colspan="2">13 pessoas cadastradas.</th></tr>
+
+<tbody></table>
+
+<script type="text/javascript">
+$(document).ready(function() 
+    { 
+        $("#myTable").tablesorter(); 
+    } 
+); 
+</script>
+
+</body></html>

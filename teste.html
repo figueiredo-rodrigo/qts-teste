@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Exemplo de filtro em tabela HTML</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			text-align: left;
+			padding: 8px;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+		input[type=text] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+		}
+	</style>
+</head>
+
+
+<body>
+
+<h2>Exemplo de filtro em tabela HTML</h2>
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Filtrar por nome..">
+
+<table id="myTable">
+  <tr class="header">
+    <th style="width:60%;">Nome</th>
+    <th style="width:40%;">País</th>
+  </tr>
+  <tr>
+    <td>João Silva</td>
+    <td>Brasil</td>
+  </tr>
+  <tr>
+    <td>Maria Santos</td>
+    <td>Portugal</td>
+  </tr>
+  <tr>
+    <td>John Doe</td>
+    <td>Estados Unidos</td>
+  </tr>
+  <tr>
+    <td>Jane Doe</td>
+    <td>Canadá</td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+	function myFunction() {
+	  var input, filter, table, tr, td, i, txtValue;
+	  input = document.getElementById("myInput");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("myTable");
+	  tr = table.getElementsByTagName("tr");
+	  for (i = 0; i < tr.length; i++) {
+	    td = tr[i].getElementsByTagName("td")[0];
+	    if (td) {
+	      txtValue = td.textContent || td.innerText;
+	      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+	        tr[i].style.display = "";
+	      } else {
+	        tr[i].style.display = "none";
+	      }
+	    }       
+	  }
+	}
+</script>
+
+</body>
+</html>
